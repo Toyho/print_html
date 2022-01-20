@@ -101,13 +101,13 @@ class MainActivity: FlutterActivity() {
 
     private fun getBatteryLevel(): Int {
 
-        val packageNamePrintHtml = "ru.istapel.printhtml"
-        val patchServicePrintHtml = "ru.istapel.printhtml.service.PrintHtmlAidlService"
-        val ACTION_PRINT_HTML_AIDL = "ru.istapel.printhtml.IPrintHtmlAIDL"
-
-        val printHtmlIntent = Intent(ACTION_PRINT_HTML_AIDL)
-        printHtmlIntent.component = ComponentName(packageNamePrintHtml, patchServicePrintHtml)
-        bindService(printHtmlIntent, serviceConnectionUpos, Context.BIND_AUTO_CREATE)
+//        val packageNamePrintHtml = "ru.istapel.printhtml"
+//        val patchServicePrintHtml = "ru.istapel.printhtml.service.PrintHtmlAidlService"
+//        val ACTION_PRINT_HTML_AIDL = "ru.istapel.printhtml.IPrintHtmlAIDL"
+//
+//        val printHtmlIntent = Intent(ACTION_PRINT_HTML_AIDL)
+//        printHtmlIntent.component = ComponentName(packageNamePrintHtml, patchServicePrintHtml)
+//        bindService(printHtmlIntent, serviceConnectionUpos, Context.BIND_AUTO_CREATE)
 
         return if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
             val batteryManager = getSystemService(BATTERY_SERVICE) as BatteryManager
