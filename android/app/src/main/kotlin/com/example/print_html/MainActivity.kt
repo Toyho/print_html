@@ -35,6 +35,9 @@ class MainActivity: FlutterActivity() {
 
     override fun onStart() {
         super.onStart()
+        Log.d("onStart", "onStart")
+
+        println("onStart")
         val packageNamePrintHtml = "ru.istapel.printhtml"
         val patchServicePrintHtml = "ru.istapel.printhtml.service.PrintHtmlAidlService"
         val ACTION_PRINT_HTML_AIDL = "ru.istapel.printhtml.IPrintHtmlAIDL"
@@ -52,30 +55,41 @@ class MainActivity: FlutterActivity() {
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-        Log.d("start method", "start method")
+        Log.d("configureFlutterEngine", "configureFlutterEngine")
 
-        println("start method")
+        println("configureFlutterEngine")
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
                 call, result ->
 
             if (call.method == "createCheck") {
 
-                println("daslgfmsfdpoijghnspogvngb")
-                Log.d("vfsdvsvs", "dgwdsgsdfgs")
+                println("createCheck")
+                Log.d("createCheck", "createCheck")
 
                 iPrintHtmlAIDL!!.printHtml("dugvhsdfouivghsiouf")
+
+                println("close createCheck")
 
             }
 
             if (call.method == "getBatteryLevel") {
                 val batteryLevel = getBatteryLevel()
+                    iPrintHtmlAIDL!!.printHtml("dugvhsdfouivghsiouf")
+                    result.success(
+                        if (iPrintHtmlAIDL != null) {
+                            "true"
+                        } else {
+                            "false"
+                        }
+                    )
 
-                if (batteryLevel != -1) {
+
+                /*if (batteryLevel != -1) {
                     result.success(batteryLevel)
                 } else {
                     result.error("UNAVAILABLE", "Battery level not available.", null)
-                }
+                }*/
             } else {
                 result.notImplemented()
             }
@@ -86,6 +100,14 @@ class MainActivity: FlutterActivity() {
     }
 
     private fun getBatteryLevel(): Int {
+
+        val packageNamePrintHtml = "ru.istapel.printhtml"
+        val patchServicePrintHtml = "ru.istapel.printhtml.service.PrintHtmlAidlService"
+        val ACTION_PRINT_HTML_AIDL = "ru.istapel.printhtml.IPrintHtmlAIDL"
+
+        val printHtmlIntent = Intent(ACTION_PRINT_HTML_AIDL)
+        printHtmlIntent.component = ComponentName(packageNamePrintHtml, patchServicePrintHtml)
+        bindService(printHtmlIntent, serviceConnectionUpos, Context.BIND_AUTO_CREATE)
 
         return if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
             val batteryManager = getSystemService(BATTERY_SERVICE) as BatteryManager
